@@ -1,0 +1,58 @@
+name: attendance
+
+on:
+  schedule:
+    - cron: '0 16 * * *'
+  workflow_dispatch:
+  workflow_call:
+    secrets:
+      FF14RS_COOKIES:
+        required: true
+      FF14RS_QU_COOKIES:
+        required: false
+      FF14RS_QU_MERCHANT_ID:
+        required: false
+      FF14RS_NOTIFICATION_URLS:
+        required: false
+      FF14RS_MAX_RETRIES:
+        required: false
+      FF14RS_AUTO_CLAIM:
+        required: false
+      FF14RS_REQUEST_TIMEOUT_MS:
+        required: false
+      FF14RS_FAIL_ON_ERROR:
+        required: false
+
+jobs:
+  attendance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: '**/pnpm-lock.yaml'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run daily attendance
+        run: pnpm action
+        env:
+          FF14RS_COOKIES: ${{ secrets.FF14RS_COOKIES }}
+          FF14RS_QU_COOKIES: ${{ secrets.FF14RS_QU_COOKIES }}
+          FF14RS_QU_MERCHANT_ID: ${{ secrets.FF14RS_QU_MERCHANT_ID }}
+          FF14RS_NOTIFICATION_URLS: ${{ secrets.FF14RS_NOTIFICATION_URLS }}
+          FF14RS_MAX_RETRIES: ${{ secrets.FF14RS_MAX_RETRIES }}
+          FF14RS_AUTO_CLAIM: ${{ secrets.FF14RS_AUTO_CLAIM }}
+          FF14RS_REQUEST_TIMEOUT_MS: ${{ secrets.FF14RS_REQUEST_TIMEOUT_MS }}
+          FF14RS_FAIL_ON_ERROR: ${{ secrets.FF14RS_FAIL_ON_ERROR }}

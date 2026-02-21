@@ -1,0 +1,36 @@
+{
+  "name": "ff14risingstones-daily-attendance",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.28.2",
+  "description": "FF14 石之家每日签到（多账号 + 推送）",
+  "license": "MIT",
+  "scripts": {
+    "build": "nitro build",
+    "dev": "nitro dev",
+    "preview": "node .output/server/index.mjs",
+    "action": "node scripts/run-attendance.mjs",
+    "action:server": "node scripts/action.mjs",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@upstash/redis": "catalog:lib",
+    "aws4fetch": "catalog:lib",
+    "ioredis": "catalog:lib",
+    "statocysts": "catalog:lib",
+    "unctx": "catalog:lib",
+    "unstorage": "catalog:lib"
+  },
+  "devDependencies": {
+    "@actions/core": "catalog:dev",
+    "@antfu/eslint-config": "catalog:dev",
+    "@types/node": "catalog:types",
+    "eslint": "catalog:dev",
+    "nitro": "catalog:dev",
+    "rolldown": "catalog:build",
+    "typescript": "catalog:dev",
+    "wait-on": "catalog:dev"
+  }
+}

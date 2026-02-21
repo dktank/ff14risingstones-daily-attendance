@@ -1,0 +1,16 @@
+services:
+  ff14rs-attendance:
+    build: .
+    container_name: ff14rs-attendance
+    restart: unless-stopped
+    environment:
+      - FF14RS_COOKIES=${FF14RS_COOKIES}
+      - FF14RS_NOTIFICATION_URLS=${FF14RS_NOTIFICATION_URLS:-}
+      - FF14RS_MAX_RETRIES=${FF14RS_MAX_RETRIES:-3}
+      - FF14RS_AUTO_CLAIM=${FF14RS_AUTO_CLAIM:-true}
+      - FF14RS_FAIL_ON_ERROR=${FF14RS_FAIL_ON_ERROR:-true}
+      # 可选：启用外部 KV（用于容器重启后仍能避免当日重复推送）
+      # - KV_REST_API_URL=${KV_REST_API_URL:-}
+      # - KV_REST_API_TOKEN=${KV_REST_API_TOKEN:-}
+    ports:
+      - '3000:3000'
